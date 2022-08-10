@@ -19,49 +19,49 @@ void showMenu(void)
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 }
 
-// 
-
+//
 
 int main(void)
 {
     int select = 0;
 
-    // invoke the function to show the operation interface
-    showMenu();
-
     // encapsulate the loop to finish the selection
-    printf("Please enter your selection: ");
-    scanf("%d", &select);
-
-    switch (select)
+    while (1)
     {
-    case 1:
-        // 1.Add Student
-        break;
-    case 2:
-        // 2.Display Student
-        break;
-    case 3:
-        // 3.Delete Student
-        break;
-    case 4:
-        // 4.Search Student
-        break;
-    case 5:
-        // 5.Modify Student
-        break;
-    case 6:
-        // 6.Wipe Student
-        break;
-    case 0:
-        // 0.Exit System 
-        printf("Welcom to use the system next time!\n");
-        system("pause");
-        return 0;
-        break;
-    default:
-        break;
-    }
+        // invoke the function to show the operation interface
+        showMenu();
 
-    return 0;
+        printf("Please enter your selection: ");
+        scanf("%d", &select);
+
+        switch (select)
+        {
+        case 1:
+            // 1.Add Student
+            break;
+        case 2:
+            // 2.Display Student
+            break;
+        case 3:
+            // 3.Delete Student
+            break;
+        case 4:
+            // 4.Search Student
+            break;
+        case 5:
+            // 5.Modify Student
+            break;
+        case 6:
+            // 6.Wipe Student
+            break;
+        case 0:
+            // 0.Exit System
+            printf("Welcom to use the system next time!\n");
+            system("pause");
+            return 0;
+            break;
+        default:
+            break;
+        }
+    }
 }
