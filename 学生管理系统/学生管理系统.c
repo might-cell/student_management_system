@@ -30,9 +30,10 @@ int main(void)
     showMenu();
 
     // encapsulate the loop to finish the selection
+    printf("Please enter your selection: ");
     scanf("%d", &select);
 
-    switch (seclect)
+    switch (select)
     {
     case 1:
         // 1.Add Student
@@ -54,6 +55,9 @@ int main(void)
         break;
     case 0:
         // 0.Exit System 
+        printf("Welcom to use the system next time!\n");
+        system("pause");
+        return 0;
         break;
     default:
         break;
