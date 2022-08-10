@@ -43,6 +43,15 @@ struct student
     float m_Calculus_Score;       /* calculus score */
 };
 
+// encapsulate the structure of system
+struct management_System
+{
+    // student array 
+    struct student student_Array[MAX];
+    // student number at present
+    int m_Student_Number;
+};
+
 int main(void)
 {
     int select = 0;
