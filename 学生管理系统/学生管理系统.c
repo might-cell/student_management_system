@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-// FUNCTION DECLARATION
+// FUNCTION DEFINITION
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 // encapsulate the function to display the operation interface
@@ -19,10 +19,45 @@ void showMenu(void)
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 }
 
+// 
+
 
 int main(void)
 {
+    int select = 0;
+
     // invoke the function to show the operation interface
     showMenu();
+
+    // encapsulate the loop to finish the selection
+    scanf("%d", &select);
+
+    switch (seclect)
+    {
+    case 1:
+        // 1.Add Student
+        break;
+    case 2:
+        // 2.Display Student
+        break;
+    case 3:
+        // 3.Delete Student
+        break;
+    case 4:
+        // 4.Search Student
+        break;
+    case 5:
+        // 5.Modify Student
+        break;
+    case 6:
+        // 6.Wipe Student
+        break;
+    case 0:
+        // 0.Exit System 
+        break;
+    default:
+        break;
+    }
+
     return 0;
 }
