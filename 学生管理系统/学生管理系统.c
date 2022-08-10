@@ -15,6 +15,7 @@ void showMenu(void)
     printf("-=-=-=-=-=-=-=   4.Search Student    -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   5.Modify Student    -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   6.Wipe Student      -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   7.Clear Screen      -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   0.Exit System       -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 }
@@ -53,6 +54,10 @@ int main(void)
             break;
         case 6:
             // 6.Wipe Student
+            break;
+        case 7:
+            // 7.Clear Screen
+            system("cls");
             break;
         case 0:
             // 0.Exit System
