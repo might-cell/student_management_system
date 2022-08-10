@@ -2,6 +2,13 @@
 #include <stdlib.h>
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// CONSTANT DEFINITION
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+// define the maximum number of student is 1000
+#define MAX 1000
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // FUNCTION DEFINITION
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -20,7 +27,21 @@ void showMenu(void)
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 }
 
-//
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// STRUCTION DEFINITION
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+// encapsulate the structure of student
+// students' information include name, gender, age, C score, linear Algebra score and calculus score
+struct student
+{
+    char m_Name[10];              /* student name */
+    int m_Gender;                 /* student gender */
+    int m_Age;                    /* student age */
+    float m_C_Score;              /* C score */
+    float m_Linear_Algebra_Score; /* linear Algebra score */
+    float m_Calculus_Score;       /* calculus score */
+};
 
 int main(void)
 {
