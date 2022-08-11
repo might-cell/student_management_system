@@ -9,6 +9,9 @@
 // define the maximum number of student is 1000
 #define MAX 1000
 
+// define the maximum number of student's exam
+#define EXAM_NUM 3
+
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // STRUCTION DEFINITION
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -23,6 +26,8 @@ typedef struct student
     float m_C_Score;              /* C score */
     float m_Linear_Algebra_Score; /* linear Algebra score */
     float m_Calculus_Score;       /* calculus score */
+    float m_Total_Score;          /* student total score */
+    float m_Average_Score;        /* student average score */
 } stu;
 
 // encapsulate the structure of system
@@ -49,6 +54,7 @@ void showMenu(void)
     printf("-=-=-=-=-=-=-=   5.Modify  Student   -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   6.Wipe    Student   -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   7.Clear   Screen    -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   8.Sort    Student   -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   0.Exit    System    -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 }
@@ -150,6 +156,15 @@ void add_Student(manager *core)
             printf("The Calculus lecture score you input is worry, please input again: ");
         }
 
+        // calculate the total and average score of the student
+        float total_Score = 0;
+        float average_Score = 0;
+        total_Score = c_Score + linear_Algebra_Score + calculus_Score;
+        average_Score = total_Score / EXAM_NUM;
+
+        core->student_Array[core->m_Student_Number].m_Total_Score = total_Score;
+        core->student_Array[core->m_Student_Number].m_Average_Score = average_Score;
+
         // update the number of student in the mangement system
         core->m_Student_Number++;
 
@@ -170,12 +185,14 @@ void show_Student(manager *core)
     {
         for (int i = 0; i < core->m_Student_Number; i++)
         {
-            printf("Name:%s\t\t", core->student_Array[i].m_Name);
-            printf("Gender:%s\t\t", core->student_Array[i].m_Gender == 1 ? "Man" : "Woman");
-            printf("Age:%d\t\t", core->student_Array[i].m_Age);
-            printf("C Program:%.1f\t\t", core->student_Array[i].m_C_Score);
-            printf("Linear Algebra:%.1f\t\t", core->student_Array[i].m_Linear_Algebra_Score);
-            printf("Calculus:%.1f\n", core->student_Array[i].m_Calculus_Score);
+            printf("Name:%s\t", core->student_Array[i].m_Name);
+            printf("Gender:%s\t", core->student_Array[i].m_Gender == 1 ? "Man" : "Woman");
+            printf("Age:%d\t", core->student_Array[i].m_Age);
+            printf("C Program:%.1f\t", core->student_Array[i].m_C_Score);
+            printf("Linear Algebra:%.1f\t", core->student_Array[i].m_Linear_Algebra_Score);
+            printf("Calculus:%.1f\t", core->student_Array[i].m_Calculus_Score);
+            printf("Total Socre:%.1f\t", core->student_Array[i].m_Total_Score);
+            printf("Average Score:%.1f\n", core->student_Array[i].m_Average_Score);
         }
     }
 
@@ -252,12 +269,14 @@ void search_Student(manager *core)
         // find out the student and perform the search operation
         printf("Successfully find out the student!\n");
 
-        printf("Name:%s\t\t", core->student_Array[result].m_Name);
-        printf("Gender:%s\t\t", core->student_Array[result].m_Gender == 1 ? "Man" : "Woman");
-        printf("Age:%d\t\t", core->student_Array[result].m_Age);
-        printf("C Program:%.1f\t\t", core->student_Array[result].m_C_Score);
-        printf("Linear Algebra:%.1f\t\t", core->student_Array[result].m_Linear_Algebra_Score);
-        printf("Calculus:%.1f\n", core->student_Array[result].m_Calculus_Score);
+        printf("Name:%s\t", core->student_Array[result].m_Name);
+        printf("Gender:%s\t", core->student_Array[result].m_Gender == 1 ? "Man" : "Woman");
+        printf("Age:%d\t", core->student_Array[result].m_Age);
+        printf("C Program:%.1f\t", core->student_Array[result].m_C_Score);
+        printf("Linear Algebra:%.1f\t", core->student_Array[result].m_Linear_Algebra_Score);
+        printf("Calculus:%.1f\t", core->student_Array[result].m_Calculus_Score);
+        printf("Total Socre:%.1f\t", core->student_Array[result].m_Total_Score);
+        printf("Average Score:%.1f\n", core->student_Array[result].m_Average_Score);
 
         system("pause");
     }
@@ -284,7 +303,7 @@ void modify_Student(manager *core)
     if (result != -1)
     {
         // find out the student and perform the modify operation
-        
+
         // modify student name
         char name[30];
         printf("Please input student's name: ");
@@ -371,6 +390,15 @@ void modify_Student(manager *core)
             }
             printf("The Calculus lecture score you input is worry, please input again: ");
         }
+        // calculate the total and average score of the student
+        float total_Score = 0;
+        float average_Score = 0;
+        total_Score = c_Score + linear_Algebra_Score + calculus_Score;
+        average_Score = total_Score / EXAM_NUM;
+
+        core->student_Array[result].m_Total_Score = total_Score;
+        core->student_Array[result].m_Average_Score = average_Score;
+
         system("pause");
     }
     else
@@ -379,6 +407,73 @@ void modify_Student(manager *core)
         system("pause");
     }
 }
+
+// 6.Wipe Student
+void wipe_Student(manager *core)
+{
+    // implemet logical clearing
+    // let current number of student in this management system is 0
+    core->m_Student_Number = 0;
+    printf("Information in the management has already been cleared!");
+    system("pause");
+}
+
+// 7.Sort Student
+void sort_Student(manager *core)
+{
+    // check whether the number of student in the mangement is 0
+    if (core->m_Student_Number == 0)
+    {
+        printf("The current record is empty!\n");
+    }
+    else
+    {
+        printf("1.Sort in ascending order according to the total score.\n");
+        printf("2.Sort in descending order according to the total score\n");
+        printf("Please select a collation rule: ");
+        int select = 0;
+        scanf("%d", &select);
+
+        for (int i = 0; i < core->m_Student_Number; i++)
+        {
+            // defien the maximum or minximum index of the students
+            int max_Score = i;
+            for (int j = i + 1; j < core->m_Student_Number; j++)
+            {
+                if (select == 1)
+                {
+                    // ascending order
+                    if (core->student_Array[max_Score].m_Total_Score > core->student_Array[j].m_Total_Score)
+                    {
+                        max_Score = j;
+                    }
+                }
+                else
+                {
+                    // descending order
+                    if (core->student_Array[max_Score].m_Total_Score < core->student_Array[j].m_Total_Score)
+                    {
+                        max_Score = j;
+                    }
+                }
+            }
+            // check opearation
+            if (i != max_Score)
+            {
+                stu temp = core->student_Array[i];
+                core->student_Array[i] = core->student_Array[max_Score];
+                core->student_Array[max_Score] = temp;
+            }
+        }
+        printf("Successfully sorted!");
+    }
+
+    system("pause");
+}
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// MAIN FUNCTION DEFINITION
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 int main(void)
 {
@@ -438,11 +533,15 @@ int main(void)
             break;
         case 6:
             // 6.Wipe Student
-
+            wipe_Student(&core);
             break;
         case 7:
             // 7.Clear Screen
             system("cls");
+            break;
+        case 8:
+            // 8.Sort Student
+            sort_Student(&core);
             break;
         case 0:
             // 0.Exit System
