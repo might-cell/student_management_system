@@ -7,7 +7,7 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 // define the maximum number of student is 1000
-#define MAX 1000
+#define MAX 100
 
 // define the maximum number of student's exam
 #define EXAM_NUM 3
@@ -23,6 +23,7 @@ typedef struct student
     char m_Name[10];              /* student name */
     int m_Gender;                 /* student gender */
     int m_Age;                    /* student age */
+    int m_Id;                     /* student id */
     float m_C_Score;              /* C score */
     float m_Linear_Algebra_Score; /* linear Algebra score */
     float m_Calculus_Score;       /* calculus score */
@@ -46,17 +47,18 @@ typedef struct management_System
 // encapsulate the function to display the operation interface
 void showMenu(void)
 {
-    printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
-    printf("-=-=-=-=-=-=-=   1.Add     Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   2.Display Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   3.Delete  Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   4.Search  Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   5.Modify  Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   6.Wipe    Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   7.Clear   Screen    -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   8.Sort    Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   0.Exit    System    -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+    printf("                                       \n");
+    printf("          [1].Add     Student          \n");
+    printf("          [2].Display Student          \n");
+    printf("          [3].Delete  Student          \n");
+    printf("          [4].Search  Student          \n");
+    printf("          [5].Modify  Student          \n");
+    printf("          [6].Wipe    Student          \n");
+    printf("          [7].Clear   Screen           \n");
+    printf("          [8].Sort    Student          \n");
+    printf("          [9].Insert  Student          \n");
+    printf("          [0].Exit    System           \n");
+    printf("                                       \n");
 }
 
 // 1.Add Student
@@ -69,6 +71,11 @@ void add_Student(manager *core)
     }
     else
     {
+        // addd student id
+        int id = 0;
+        printf("Please input student's id: ");
+        scanf("%d", &id);
+        core->student_Array[core->m_Student_Number].m_Id = id;
         // add student name
         char name[30];
         printf("Please input student's name: ");
@@ -76,7 +83,11 @@ void add_Student(manager *core)
         strcpy(core->student_Array[core->m_Student_Number].m_Name, name);
 
         // add student gender: 1 -> man, 0 -> woman
-        printf("1 - Man\t0 - Woman\n");
+        printf("Use following number to describe the gender.\n");
+        printf("                              \n");
+        printf("          [1].  Man           \n");
+        printf("          [0].  Woman         \n");
+        printf("                              \n");
         printf("Please input stdeunt's gender: ");
         int gender = 0;
         while (1)
@@ -169,6 +180,7 @@ void add_Student(manager *core)
         core->m_Student_Number++;
 
         system("pause");
+        system("cls");
     }
 }
 
@@ -185,6 +197,7 @@ void show_Student(manager *core)
     {
         for (int i = 0; i < core->m_Student_Number; i++)
         {
+            printf("Id:%d\t", core->student_Array[i].m_Id);
             printf("Name:%s\t", core->student_Array[i].m_Name);
             printf("Gender:%s\t", core->student_Array[i].m_Gender == 1 ? "Man" : "Woman");
             printf("Age:%d\t", core->student_Array[i].m_Age);
@@ -195,13 +208,28 @@ void show_Student(manager *core)
             printf("Average Score:%.1f\n", core->student_Array[i].m_Average_Score);
         }
     }
-
     system("pause");
+    system("cls");
 }
 
 // encapsulate a function to check whether a student is in the mangement system
 // if exsit, return the index of the student in the management system
 // else, return -1
+int check_Student_Id(manager *core, int id)
+{
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        if (core->student_Array[i].m_Id == id)
+        {
+            // finde the student in the mangement system
+            // return the index of the student
+            return i;
+        }
+    }
+    // if the management system cannot find the student at the end of the loop
+    return -1;
+}
+
 int check_Student_Exist(manager *core, char name[])
 {
     for (int i = 0; i < core->m_Student_Number; i++)
@@ -243,20 +271,21 @@ void delete_Student(manager *core)
         core->m_Student_Number--;
         printf("Successfully delete!\n");
         system("pause");
+        system("cls");
     }
     else
     {
-        printf("The student is not exsit in this management system!");
+        printf("The student is not exsit in this management system!\n");
         system("pause");
+        system("cls");
     }
 }
 
-// 4.Search Student
-void search_Student(manager *core)
+void search_Name(manager *core)
 {
     printf("Please input the name you want to search: ");
     char name[10];
-    scanf("%s", &name);
+    scanf("%s", name);
 
     // check whether the student is in the management system
     int result = check_Student_Exist(core, name);
@@ -269,6 +298,7 @@ void search_Student(manager *core)
         // find out the student and perform the search operation
         printf("Successfully find out the student!\n");
 
+        printf("Id:%d\t", core->student_Array[result].m_Id);
         printf("Name:%s\t", core->student_Array[result].m_Name);
         printf("Gender:%s\t", core->student_Array[result].m_Gender == 1 ? "Man" : "Woman");
         printf("Age:%d\t", core->student_Array[result].m_Age);
@@ -277,13 +307,74 @@ void search_Student(manager *core)
         printf("Calculus:%.1f\t", core->student_Array[result].m_Calculus_Score);
         printf("Total Socre:%.1f\t", core->student_Array[result].m_Total_Score);
         printf("Average Score:%.1f\n", core->student_Array[result].m_Average_Score);
-
         system("pause");
+        system("cls");
     }
     else
     {
-        printf("The student is not exsit in this management system!");
+        printf("The student is not exsit in this management system!\n");
         system("pause");
+        system("cls");
+    }
+}
+
+// search by id
+void search_Id(manager *core)
+{
+    printf("Please input the id you want to search: ");
+    int num = 0;
+    scanf("%d", &num);
+
+    // check whether the student is in the management system
+    int result = check_Student_Id(core, num);
+
+    // if reslut = -1, the student is not exsit
+    // else the student is exist
+
+    if (result != -1)
+    {
+        // find out the student and perform the search operation
+        printf("Successfully find out the student!\n");
+
+        printf("Id:%d\t", core->student_Array[result].m_Id);
+        printf("Name:%s\t", core->student_Array[result].m_Name);
+        printf("Gender:%s\t", core->student_Array[result].m_Gender == 1 ? "Man" : "Woman");
+        printf("Age:%d\t", core->student_Array[result].m_Age);
+        printf("C Program:%.1f\t", core->student_Array[result].m_C_Score);
+        printf("Linear Algebra:%.1f\t", core->student_Array[result].m_Linear_Algebra_Score);
+        printf("Calculus:%.1f\t", core->student_Array[result].m_Calculus_Score);
+        printf("Total Socre:%.1f\t", core->student_Array[result].m_Total_Score);
+        printf("Average Score:%.1f\n", core->student_Array[result].m_Average_Score);
+        system("pause");
+        system("cls");
+    }
+    else
+    {
+        printf("The student is not exsit in this management system!\n");
+        system("pause");
+        system("cls");
+    }
+}
+
+// 4.Search Student
+void search_Student(manager *core)
+{
+    printf("                   [1].Search by name.\n");
+    printf("                   [2].Search by id.\n");
+    int option = 0;
+    printf("Please select a search metric: ");
+    scanf("%d", &option);
+
+    switch (option)
+    {
+    case 1:
+        search_Name(core);
+        break;
+    case 2:
+        search_Id(core);
+        break;
+    default:
+        break;
     }
 }
 
@@ -304,6 +395,11 @@ void modify_Student(manager *core)
     {
         // find out the student and perform the modify operation
 
+        // modify student id
+        int id = 0;
+        printf("Please input student's id");
+        scanf("%d", &id);
+        core->student_Array[result].m_Id = id;
         // modify student name
         char name[30];
         printf("Please input student's name: ");
@@ -398,13 +494,14 @@ void modify_Student(manager *core)
 
         core->student_Array[result].m_Total_Score = total_Score;
         core->student_Array[result].m_Average_Score = average_Score;
-
         system("pause");
+        system("cls");
     }
     else
     {
-        printf("The student is not exsit in this management system!");
+        printf("The student is not exsit in this management system!\n");
         system("pause");
+        system("cls");
     }
 }
 
@@ -416,6 +513,186 @@ void wipe_Student(manager *core)
     core->m_Student_Number = 0;
     printf("Information in the management has already been cleared!");
     system("pause");
+    system("cls");
+}
+
+// Sort by total score
+void sort_Total_Score(manager *core)
+{
+    printf("                                                                                               \n");
+    printf("                   [1].Sort in ascending order according to the total score.                   \n");
+    printf("                   [2].Sort in descending order according to the total score                   \n");
+    printf("                                                                                               \n");
+    printf("Please select a collation rule: ");
+    int select = 0;
+    scanf("%d", &select);
+
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        // defien the maximum or minximum index of the students
+        int max_Score = i;
+        for (int j = i + 1; j < core->m_Student_Number; j++)
+        {
+            if (select == 1)
+            {
+                // ascending order
+                if (core->student_Array[max_Score].m_Total_Score >= core->student_Array[j].m_Total_Score)
+                {
+                    max_Score = j;
+                }
+            }
+            else
+            {
+                // descending order
+                if (core->student_Array[max_Score].m_Total_Score <= core->student_Array[j].m_Total_Score)
+                {
+                    max_Score = j;
+                }
+            }
+        }
+        // check opearation
+        if (i != max_Score)
+        {
+            stu temp = core->student_Array[i];
+            core->student_Array[i] = core->student_Array[max_Score];
+            core->student_Array[max_Score] = temp;
+        }
+    }
+    printf("Successfully sorted!\n");
+}
+
+// sort by id
+
+void sort_Id(manager *core)
+{
+    printf("                                                                                      \n");
+    printf("                   [1].Sort in ascending order according to the id.                   \n");
+    printf("                   [2].Sort in descending order according to the id.                  \n");
+    printf("                                                                                       \n");
+    printf("Please select a collation rule: ");
+    int select = 0;
+    scanf("%d", &select);
+
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        // defien the maximum or minximum index of the students
+        int max_Score = i;
+        for (int j = i + 1; j < core->m_Student_Number; j++)
+        {
+            if (select == 1)
+            {
+                // ascending order
+                if (core->student_Array[max_Score].m_Id >= core->student_Array[j].m_Id)
+                {
+                    max_Score = j;
+                }
+            }
+            else
+            {
+                // descending order
+                if (core->student_Array[max_Score].m_Id <= core->student_Array[j].m_Id)
+                {
+                    max_Score = j;
+                }
+            }
+        }
+        // check opearation
+        if (i != max_Score)
+        {
+            stu temp = core->student_Array[i];
+            core->student_Array[i] = core->student_Array[max_Score];
+            core->student_Array[max_Score] = temp;
+        }
+    }
+    printf("Successfully sorted!\n");
+}
+
+// sort by name
+void sort_Name(manager *core)
+{
+    printf("                                                                                        \n");
+    printf("                   [1].Sort in ascending order according to the name.                   \n");
+    printf("                   [2].Sort in descending order according to the name                   \n");
+    printf("                                                                                        \n");
+    printf("Please select a collation rule: ");
+    int select = 0;
+    scanf("%d", &select);
+
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        // defien the maximum or minximum index of the students
+        int max_Score = i;
+        for (int j = i + 1; j < core->m_Student_Number; j++)
+        {
+            if (select == 1)
+            {
+                // ascending order
+                if (strcmp(core->student_Array[max_Score].m_Name, core->student_Array[j].m_Name) >= 0)
+                {
+                    max_Score = j;
+                }
+            }
+            else
+            {
+                // descending order
+                if (strcmp(core->student_Array[max_Score].m_Name, core->student_Array[j].m_Name) <= 0)
+                {
+                    max_Score = j;
+                }
+            }
+        }
+        // check opearation
+        if (i != max_Score)
+        {
+            stu temp = core->student_Array[i];
+            core->student_Array[i] = core->student_Array[max_Score];
+            core->student_Array[max_Score] = temp;
+        }
+    }
+    printf("Successfully sorted!\n");
+}
+
+// sort by average score
+void sort_Average_Score(manager *core)
+{
+    printf("                   [1].Sort in ascending order according to the average score.\n");
+    printf("                   [2].Sort in descending order according to the average score\n");
+    printf("Please select a collation rule: ");
+    int select = 0;
+    scanf("%d", &select);
+
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        // defien the maximum or minximum index of the students
+        int max_Score = i;
+        for (int j = i + 1; j < core->m_Student_Number; j++)
+        {
+            if (select == 1)
+            {
+                // ascending order
+                if (core->student_Array[max_Score].m_Average_Score >= core->student_Array[j].m_Average_Score)
+                {
+                    max_Score = j;
+                }
+            }
+            else
+            {
+                // descending order
+                if (core->student_Array[max_Score].m_Average_Score <= core->student_Array[j].m_Average_Score)
+                {
+                    max_Score = j;
+                }
+            }
+        }
+        // check opearation
+        if (i != max_Score)
+        {
+            stu temp = core->student_Array[i];
+            core->student_Array[i] = core->student_Array[max_Score];
+            core->student_Array[max_Score] = temp;
+        }
+    }
+    printf("Successfully sorted!\n");
 }
 
 // 7.Sort Student
@@ -428,47 +705,172 @@ void sort_Student(manager *core)
     }
     else
     {
-        printf("1.Sort in ascending order according to the total score.\n");
-        printf("2.Sort in descending order according to the total score\n");
-        printf("Please select a collation rule: ");
-        int select = 0;
-        scanf("%d", &select);
 
-        for (int i = 0; i < core->m_Student_Number; i++)
+        printf("                   [1].Sort by total score.\n");
+        printf("                   [2].Sort by average score.\n");
+        printf("                   [3].Sort by name.\n");
+        printf("                   [4].Sort by id.\n");
+        printf("Please select a sort metric: ");
+        int option = 0;
+        scanf("%d", &option);
+        switch (option)
         {
-            // defien the maximum or minximum index of the students
-            int max_Score = i;
-            for (int j = i + 1; j < core->m_Student_Number; j++)
-            {
-                if (select == 1)
-                {
-                    // ascending order
-                    if (core->student_Array[max_Score].m_Total_Score > core->student_Array[j].m_Total_Score)
-                    {
-                        max_Score = j;
-                    }
-                }
-                else
-                {
-                    // descending order
-                    if (core->student_Array[max_Score].m_Total_Score < core->student_Array[j].m_Total_Score)
-                    {
-                        max_Score = j;
-                    }
-                }
-            }
-            // check opearation
-            if (i != max_Score)
-            {
-                stu temp = core->student_Array[i];
-                core->student_Array[i] = core->student_Array[max_Score];
-                core->student_Array[max_Score] = temp;
-            }
+        case 1:
+            // 1.Sort by total score.
+            sort_Total_Score(core);
+            break;
+        case 2:
+            // 2.Sort by average score.
+            sort_Average_Score(core);
+            break;
+        case 3:
+            // 3.Sort by name.
+            sort_Name(core);
+            break;
+        case 4:
+            // 4.Sort by id.
+            sort_Id(core);
+            break;
+        default:
+            break;
         }
-        printf("Successfully sorted!");
     }
-
     system("pause");
+    system("cls");
+}
+
+// Insert  Student
+void insert_Student(manager *core)
+{
+    core->m_Student_Number++;
+    printf("Please input the index you want to insert: ");
+    int index = 0;
+    scanf("%d", &index);
+
+    // init
+    printf("Let's init the new student!\n");
+    stu new_Student;
+    // check whether the system is full
+    if (core->m_Student_Number == MAX)
+    {
+        printf("This mangement system is full, you cannot add any student!\n");
+    }
+    else
+    {
+        // add student id
+        int id = 0;
+        printf("Please input student's id: ");
+        scanf("%d", &id);
+        new_Student.m_Id = id;
+        // add student name
+        char name[30];
+        printf("Please input student's name: ");
+        scanf("%s", name);
+        strcpy(new_Student.m_Name, name);
+
+        // add student gender: 1 -> man, 0 -> woman
+        printf("Use following number to describe the gender.\n");
+        printf("                              \n");
+        printf("          [1].  Man           \n");
+        printf("          [0].  Woman         \n");
+        printf("                              \n");
+        printf("Please input stdeunt's gender: ");
+        int gender = 0;
+        while (1)
+        {
+            // if enter 1 or 0, you can break the loop
+            // else the gender is worry, you will try again
+            scanf("%d", &gender);
+            if (gender == 1 || gender == 0)
+            {
+                new_Student.m_Gender = gender;
+                break;
+            }
+            printf("The gender you input is worry, please input again: ");
+        }
+
+        // add student age
+        printf("Please input student's age: ");
+        int age = 0;
+        while (1)
+        {
+            // if the age is in (0, 100), you can break the loop
+            // else the age is worry, you will try again
+            scanf("%d", &age);
+            if (age > 0 && age < 100)
+            {
+                new_Student.m_Age = age;
+                break;
+            }
+            printf("The age you input is worry, please input again: ");
+        }
+
+        // add student C score
+        printf("Please input student's C program lecture score: ");
+        float c_Score = 0;
+        while (1)
+        {
+            // if the score is in [0, 100], you can break the loop
+            // else the score is worry, you will try again
+            scanf("%f", &c_Score);
+            if (c_Score >= 0 && c_Score <= 100)
+            {
+                new_Student.m_C_Score = c_Score;
+                break;
+            }
+            printf("The C program lecture score you input is worry, please input again: ");
+        }
+
+        // add student Linear Algebra score
+        printf("Please input student's Linear Algebra lecture score: ");
+        float linear_Algebra_Score = 0;
+        while (1)
+        {
+            // if the score is in [0, 100], you can break the loop
+            // else the score is worry, you will try again
+            scanf("%f", &linear_Algebra_Score);
+            if (linear_Algebra_Score >= 0 && linear_Algebra_Score <= 100)
+            {
+                new_Student.m_Linear_Algebra_Score = linear_Algebra_Score;
+                break;
+            }
+            printf("The Linear Algebra lecture score you input is worry, please input again: ");
+        }
+
+        // add student calculus score
+        printf("Please input student's Calculus lecture score: ");
+        float calculus_Score = 0;
+        while (1)
+        {
+            // if the score is in [0, 100], you can break the loop
+            // else the score is worry, you will try again
+            scanf("%f", &calculus_Score);
+            if (calculus_Score >= 0 && calculus_Score <= 100)
+            {
+                new_Student.m_Calculus_Score = calculus_Score;
+                break;
+            }
+            printf("The Calculus lecture score you input is worry, please input again: ");
+        }
+
+        // calculate the total and average score of the student
+        float total_Score = 0;
+        float average_Score = 0;
+        total_Score = c_Score + linear_Algebra_Score + calculus_Score;
+        average_Score = total_Score / EXAM_NUM;
+
+        new_Student.m_Total_Score = total_Score;
+        new_Student.m_Average_Score = average_Score;
+
+        for (int i = core->m_Student_Number - 1; i >= index; i--)
+        {
+            core->student_Array[i + 1] = core->student_Array[i];
+        }
+        core->student_Array[index] = new_Student;
+
+        system("pause");
+        system("cls");
+    }
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -542,6 +944,10 @@ int main(void)
         case 8:
             // 8.Sort Student
             sort_Student(&core);
+            break;
+        case 9:
+            // 9.Insert  Student
+            insert_Student(&core);
             break;
         case 0:
             // 0.Exit System
