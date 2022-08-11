@@ -251,7 +251,6 @@ void search_Student(manager *core)
     {
         // find out the student and perform the search operation
         printf("Successfully find out the student!\n");
-        
 
         printf("Name:%s\t\t", core->student_Array[result].m_Name);
         printf("Gender:%s\t\t", core->student_Array[result].m_Gender == 1 ? "Man" : "Woman");
@@ -260,6 +259,118 @@ void search_Student(manager *core)
         printf("Linear Algebra:%.1f\t\t", core->student_Array[result].m_Linear_Algebra_Score);
         printf("Calculus:%.1f\n", core->student_Array[result].m_Calculus_Score);
 
+        system("pause");
+    }
+    else
+    {
+        printf("The student is not exsit in this management system!");
+        system("pause");
+    }
+}
+
+// 5.Modify Student
+void modify_Student(manager *core)
+{
+    printf("Please input the name you want to modify: ");
+    char name[10];
+    scanf("%s", &name);
+
+    // check whether the student is in the management system
+    int result = check_Student_Exist(core, name);
+
+    // if reslut = -1, the student is not exsit
+    // else the student is exist
+
+    if (result != -1)
+    {
+        // find out the student and perform the modify operation
+        
+        // modify student name
+        char name[30];
+        printf("Please input student's name: ");
+        scanf("%s", name);
+        strcpy(core->student_Array[result].m_Name, name);
+
+        // modify student gender: 1 -> man, 0 -> woman
+        printf("1 - Man\t0 - Woman\n");
+        printf("Please input stdeunt's gender: ");
+        int gender = 0;
+        while (1)
+        {
+            // if enter 1 or 0, you can break the loop
+            // else the gender is worry, you will try again
+            scanf("%d", &gender);
+            if (gender == 1 || gender == 0)
+            {
+                core->student_Array[result].m_Gender = gender;
+                break;
+            }
+            printf("The gender you input is worry, please input again: ");
+        }
+
+        // modify student age
+        printf("Please input student's age: ");
+        int age = 0;
+        while (1)
+        {
+            // if the age is in (0, 100), you can break the loop
+            // else the age is worry, you will try again
+            scanf("%d", &age);
+            if (age > 0 && age < 100)
+            {
+                core->student_Array[result].m_Age = age;
+                break;
+            }
+            printf("The age you input is worry, please input again: ");
+        }
+
+        // modify student C score
+        printf("Please input student's C program lecture score: ");
+        float c_Score = 0;
+        while (1)
+        {
+            // if the score is in [0, 100], you can break the loop
+            // else the score is worry, you will try again
+            scanf("%f", &c_Score);
+            if (c_Score >= 0 && c_Score <= 100)
+            {
+                core->student_Array[result].m_C_Score = c_Score;
+                break;
+            }
+            printf("The C program lecture score you input is worry, please input again: ");
+        }
+
+        // modify student Linear Algebra score
+        printf("Please input student's Linear Algebra lecture score: ");
+        float linear_Algebra_Score = 0;
+        while (1)
+        {
+            // if the score is in [0, 100], you can break the loop
+            // else the score is worry, you will try again
+            scanf("%f", &linear_Algebra_Score);
+            if (linear_Algebra_Score >= 0 && linear_Algebra_Score <= 100)
+            {
+                core->student_Array[result].m_Linear_Algebra_Score = linear_Algebra_Score;
+                break;
+            }
+            printf("The Linear Algebra lecture score you input is worry, please input again: ");
+        }
+
+        // modify student calculus score
+        printf("Please input student's Calculus lecture score: ");
+        float calculus_Score = 0;
+        while (1)
+        {
+            // if the score is in [0, 100], you can break the loop
+            // else the score is worry, you will try again
+            scanf("%f", &calculus_Score);
+            if (calculus_Score >= 0 && calculus_Score <= 100)
+            {
+                core->student_Array[result].m_Calculus_Score = calculus_Score;
+                break;
+            }
+            printf("The Calculus lecture score you input is worry, please input again: ");
+        }
         system("pause");
     }
     else
@@ -323,9 +434,11 @@ int main(void)
             break;
         case 5:
             // 5.Modify Student
+            modify_Student(&core);
             break;
         case 6:
             // 6.Wipe Student
+
             break;
         case 7:
             // 7.Clear Screen
