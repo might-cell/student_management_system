@@ -203,7 +203,36 @@ int check_Student_Exist(manager *core, char name[])
 // 3.Delete Student
 void delete_Student(manager *core)
 {
+    printf("Please input the name you want to delete: ");
+    char name[10];
+    scanf("%s",&name);
+
     // check whether the student is in the management system
+    int result = check_Student_Exist(core, name);
+
+    // if reslut = -1, the student is not exsit
+    // else the student is exist
+    if (result != -1)
+    {
+        // find out the student and perform the delete operation
+
+        // delete the student's information, we need to move the data after the student forward
+        for (int i = result;i < core->m_Student_Number;i++)
+        {
+            // move all the data after this student forward one by one
+            core->student_Array[i] = core->student_Array[i+1];
+        }
+        // update the number of student in the management system
+        core->m_Student_Number--;
+        printf("Successfully delete!\n");
+        system("pause");
+    }
+    else
+    {
+        printf("The student is not exsit in this management system!");
+        system("pause");
+    }
+
 }
 
 int main(void)
@@ -236,22 +265,24 @@ int main(void)
             show_Student(&core);
             break;
         case 3:
-        {
             // 3.Delete Student
-            printf("Please input the student name: ");
-            char name[10];
-            scanf("%s", &name);
-            if (check_Student_Exist(&core, name) == -1)
-            {
-                printf("The student is not in the management system!");
-            }
-            else
-            {
-                printf("Find out the student!\nThe index of the student is %d.\n", check_Student_Exist(&core, name));
-            }
+
+            // The following is the test funtion
+
+            // printf("Please input the student name: ");
+            // char name[10];
+            // scanf("%s", &name);
+            // if (check_Student_Exist(&core, name) == -1)
+            // {
+            //     printf("The student is not in the management system!");
+            // }
+            // else
+            // {
+            //     printf("Find out the student!\nThe index of the student is %d.\n", check_Student_Exist(&core, name));
+            // }
+
             delete_Student(&core);
             break;
-        }
         case 4:
             // 4.Search Student
             break;
