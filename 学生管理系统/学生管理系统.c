@@ -42,14 +42,14 @@ typedef struct management_System
 void showMenu(void)
 {
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
-    printf("-=-=-=-=-=-=-=   1.Add Student       -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   1.Add     Student   -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=   2.Display Student   -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   3.Delete Student    -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   4.Search Student    -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   5.Modify Student    -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   6.Wipe Student      -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   7.Clear Screen      -=-=-=-=-=-=-=\n");
-    printf("-=-=-=-=-=-=-=   0.Exit System       -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   3.Delete  Student   -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   4.Search  Student   -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   5.Modify  Student   -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   6.Wipe    Student   -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   7.Clear   Screen    -=-=-=-=-=-=-=\n");
+    printf("-=-=-=-=-=-=-=   0.Exit    System    -=-=-=-=-=-=-=\n");
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 }
 
@@ -70,6 +70,7 @@ void add_Student(manager *core)
         strcpy(core->student_Array[core->m_Student_Number].m_Name, name);
 
         // add student gender: 1 -> man, 0 -> woman
+        printf("1 - Man\t0 - Woman\n");
         printf("Please input stdeunt's gender: ");
         int gender = 0;
         while (1)
@@ -92,8 +93,8 @@ void add_Student(manager *core)
         {
             // if the age is in (0, 100), you can break the loop
             // else the age is worry, you will try again
-            scanf("%d", &gender);
-            if (gender > 0 && gender < 100)
+            scanf("%d", &age);
+            if (age > 0 && age < 100)
             {
                 core->student_Array[core->m_Student_Number].m_Age = age;
                 break;
@@ -143,12 +144,43 @@ void add_Student(manager *core)
             scanf("%f", &calculus_Score);
             if (calculus_Score >= 0 && calculus_Score <= 100)
             {
-                core->student_Array[core->m_Student_Number].m_Linear_Algebra_Score = calculus_Score;
+                core->student_Array[core->m_Student_Number].m_Calculus_Score = calculus_Score;
                 break;
             }
             printf("The Calculus lecture score you input is worry, please input again: ");
         }
+
+        // update the number of student in the mangement system
+        core->m_Student_Number++;
+
+        system("pause");
     }
+}
+
+// 2.Dispplay Student
+void show_Student(manager *core)
+{
+    // if check whether the number of the management system is 0, disp 0
+    // else disp the information of the student
+    if (core->m_Student_Number == 0)
+    {
+        printf("The current record is empty!\n");
+    }
+    else
+    {
+        printf("Name\t\t\tGender\t\t\tAge\t\t\tC Program\t\t\tLinear Algebra\t\t\tCalculus\n");
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        printf("%s\t\t\t", core->student_Array[i].m_Name);
+        printf("%s\t\t\t", core->student_Array[i].m_Gender == 1 ? "Man" : "Woman");
+        printf("%d\t\t\t", core->student_Array[i].m_Age);
+        printf("%.1f\t\t\t", core->student_Array[i].m_C_Score);
+        printf("%.1f\t\t\t", core->student_Array[i].m_Linear_Algebra_Score);
+        printf("%.1f\n", core->student_Array[i].m_Calculus_Score);
+    }
+    }
+
+    system("pause");
 }
 
 int main(void)
@@ -178,6 +210,7 @@ int main(void)
             break;
         case 2:
             // 2.Display Student
+            show_Student(&core);
             break;
         case 3:
             // 3.Delete Student
