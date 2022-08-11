@@ -168,19 +168,42 @@ void show_Student(manager *core)
     }
     else
     {
-        printf("Name\t\t\tGender\t\t\tAge\t\t\tC Program\t\t\tLinear Algebra\t\t\tCalculus\n");
-    for (int i = 0; i < core->m_Student_Number; i++)
-    {
-        printf("%s\t\t\t", core->student_Array[i].m_Name);
-        printf("%s\t\t\t", core->student_Array[i].m_Gender == 1 ? "Man" : "Woman");
-        printf("%d\t\t\t", core->student_Array[i].m_Age);
-        printf("%.1f\t\t\t", core->student_Array[i].m_C_Score);
-        printf("%.1f\t\t\t", core->student_Array[i].m_Linear_Algebra_Score);
-        printf("%.1f\n", core->student_Array[i].m_Calculus_Score);
-    }
+        for (int i = 0; i < core->m_Student_Number; i++)
+        {
+            printf("Name:%s\t\t", core->student_Array[i].m_Name);
+            printf("Gender:%s\t\t", core->student_Array[i].m_Gender == 1 ? "Man" : "Woman");
+            printf("Age:%d\t\t", core->student_Array[i].m_Age);
+            printf("C Program:%.1f\t\t", core->student_Array[i].m_C_Score);
+            printf("Linear Algebra:%.1f\t\t", core->student_Array[i].m_Linear_Algebra_Score);
+            printf("Calculus:%.1f\n", core->student_Array[i].m_Calculus_Score);
+        }
     }
 
     system("pause");
+}
+
+// encapsulate a function to check whether a student is in the mangement system
+// if exsit, return the index of the student in the management system
+// else, return -1
+int check_Student_Exist(manager *core, char name[])
+{
+    for (int i = 0; i < core->m_Student_Number; i++)
+    {
+        if (!strcmp(core->student_Array[i].m_Name, name))
+        {
+            // finde the student in the mangement system
+            // return the index of the student
+            return i;
+        }
+    }
+    // if the management system cannot find the student at the end of the loop
+    return -1;
+}
+
+// 3.Delete Student
+void delete_Student(manager *core)
+{
+    // check whether the student is in the management system
 }
 
 int main(void)
@@ -213,8 +236,22 @@ int main(void)
             show_Student(&core);
             break;
         case 3:
+        {
             // 3.Delete Student
+            printf("Please input the student name: ");
+            char name[10];
+            scanf("%s", &name);
+            if (check_Student_Exist(&core, name) == -1)
+            {
+                printf("The student is not in the management system!");
+            }
+            else
+            {
+                printf("Find out the student!\nThe index of the student is %d.\n", check_Student_Exist(&core, name));
+            }
+            delete_Student(&core);
             break;
+        }
         case 4:
             // 4.Search Student
             break;
